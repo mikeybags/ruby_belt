@@ -1,0 +1,22 @@
+<div class="container">
+  <br>
+  <p class="pull-right"><a href="/songs">Dashboard</a> | <a class="pull-right" href="/sessions" data-method="delete">Log Out</a></p>
+  <br>
+  <div class="col-xs-12">
+    <h5>Users who added <%= @song.artist %> - <%= @song.title %></h5>
+    <table  class="table table-striped text-center">
+      <thead>
+        <th class="text-center">Name</th>
+        <th class="text-center">Times Added</th>
+      </thead>
+      <tbody>
+        <% @song.users.distinct.each do |user| %>
+        <tr>
+          <td><a href="/users/<%= user.id %>"><%= user.full_name %></a></td>
+          <td><%= user.playlists.where("song_id = ?", @song.id).size %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

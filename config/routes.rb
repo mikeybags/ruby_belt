@@ -1,4 +1,21 @@
 Rails.application.routes.draw do
+  get 'playlists/create'
+
+  root 'users#new'
+  post '/users' => 'users#create'
+  get '/users/:id' => 'users#show'
+
+  post '/sessions' => 'sessions#create'
+  delete '/sessions' => 'sessions#destroy'
+
+  get '/songs' => 'songs#index'
+  post '/songs' => 'songs#create'
+  get '/songs/:id' => 'songs#show'
+
+  post '/playlists' => 'playlists#create'
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

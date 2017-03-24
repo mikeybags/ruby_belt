@@ -1,0 +1,55 @@
+<div class="container">
+
+  <h3>Welcome to Playlists!</h3>
+  <h5>Please sign in to participate</h5>
+    <div id="register" class="col-md-6">
+      <h3>Register</h3>
+      <%= form_for @user do |f| %>
+        <div class="form-group">
+          <%= f.label "First Name:" %>
+          <%= f.text_field :first_name, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label "Last Name:" %>
+          <%= f.text_field :last_name, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label "Email:" %>
+          <%= f.text_field :email, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label "Password:" %>
+          <%= f.password_field :password, class: "form-control" %>
+          <h6>*Password should be at least 8 characters</h6>
+        </div>
+        <%= f.submit 'Register' %>
+      <% end %>
+    </div>
+
+    <div class="col-md-6">
+      <h3>Log In</h3>
+      <%= form_tag("/sessions", method: "post") do %>
+        <div class="form-group">
+          <%= label_tag(:email, "Email:") %>
+          <%= text_field_tag(:email, "", class: "form-control") %>
+        </div>
+        <div class="form-group">
+          <%= label_tag(:password, "Password:") %>
+          <%= password_field_tag(:password, "", class: "form-control") %>
+        </div>
+        <%= submit_tag("Log In") %>
+      <% end %>
+    </div>
+    <div class="col-xs-6">
+      <br>
+      <% if flash[:notice] %>
+        <% flash[:notice].each do |message| %>
+          <% if message.include? "registered" %>
+            <p class="text-success"><%= message %></p>
+          <% else %>
+            <p class="text-danger"><%= message %></p>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+</div>

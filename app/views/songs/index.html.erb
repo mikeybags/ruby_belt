@@ -1,0 +1,60 @@
+<div class="container">
+  <br>
+  <a class="pull-right" href="/sessions" data-method="delete">Log Out</a>
+  <br>
+  <div class="col-xs-12">
+    <h3>Hello, <%= @user.first_name %> <%= @user.last_name %></h3>
+    <br>
+    <h5>All of the songs in our hub:</h5>
+    <table class="table table-striped text-center">
+      <thead>
+        <th class="text-center">Artist</th>
+        <th class="text-center">Title</th>
+        <th class="text-center"># of Times Added</th>
+        <th class="text-center">Add to playlist</th>
+      </thead>
+      <tbody>
+        <% @songs.each do |song| %>
+          <tr>
+            <td><%= song.artist %></td>
+            <td><a href="/songs/<%= song.id %>"><%= song.title %></a></td>
+            <td><%= song.playlists.size %></td>
+            <td>
+              <form action="/playlists" method="post">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input type="hidden" name="song_id" value="<%= song.id %>">
+                <input type="submit" value="Add" class="btn-primary btn-xs">
+              </form>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-4 col-xs-12 row">
+    <h4>Add a song:</h4>
+    <%= form_for @song do |f| %>
+      <div class="form-group">
+        <%= f.label "Title:" %>
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label "Artist:" %>
+        <%= f.text_field :artist, class: "form-control" %>
+      </div>
+      <%= f.submit 'Add Song', class: "btn btn-success" %>
+    <% end %>
+  </div>
+  <div class="col-xs-6">
+    <br><br><br>
+    <% if flash[:notice] %>
+      <% flash[:notice].each do |message| %>
+        <% if message.include? "added" %>
+          <p class="text-success"><%= message %></p>
+        <% else %>
+          <p class="text-danger"><%= message %></p>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
